@@ -37,23 +37,23 @@ print(f"Невязка эталона: {res_lib:.2e}")
 # Метод Гаусса с выбором ведущего элемента
 def gauss_method(A, b):
     n = len(b)
-    # Создаем копии, чтобы не менять исходные данные
+    
     A = A.copy().astype(float)
     b = b.copy().astype(float)
-    # Прямой ход
+  
     for k in range(n):
-        # Выбор ведущего элемента (частичный выбор)
+        
         max_row = k + np.argmax(np.abs(A[k:n, k]))
-        # Перестановка строк
+        
         if max_row != k:
             A[[k, max_row]] = A[[max_row, k]]
             b[[k, max_row]] = b[[max_row, k]]
-        # Исключение
+        
         for i in range(k + 1, n):
             m = A[i, k] / A[k, k]
             A[i, k:] -= m * A[k, k:]
             b[i] -= m * b[k]
-    # Обратный ход
+    
     x = np.zeros(n)
     for i in range(n - 1, -1, -1):
         x[i] = (b[i] - np.dot(A[i, i + 1:], x[i + 1:])) / A[i, i]
